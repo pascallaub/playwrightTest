@@ -24,3 +24,18 @@ test('saucedemo', async ({ page }) => {
   await page.fill('#password', 'secret_sauce');
   await page.click('#login-button');
 })
+
+test('wikipedia1', async ({ page }) => {
+  await page.goto('https://de.wikipedia.org/');
+  await page.fill('input[name="search"]', 'playwright');
+  await page.click('input[type="submit"]');
+
+  await page.waitForTimeout(2000);
+
+  //search for "Playwright"
+  const pageContent = await page.content();
+  await expect(pageContent).toContain('Playwright');
+
+  //screenshot
+  await page.screenshot({ path: 'screenshot.png' });
+});
