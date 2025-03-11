@@ -1,7 +1,7 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
+test('wikipedia', async ({ page }) => {
   await page.goto('https://wikipedia.org/');
 
   // Expect a title "to contain" a substring.
@@ -13,3 +13,14 @@ test('has title', async ({ page }) => {
   expect(navigationCount).toBeGreaterThan(0);
 });
 
+test('saucedemo', async ({ page }) => {
+  await page.goto('https://saucedemo.com/');
+
+  await expect(page).toHaveTitle(/Swag Labs/);
+
+  //username + passwort eintragen
+  await page.getByPlaceholder('Username');
+  await page.fill('#user-name', 'standard_user');
+  await page.fill('#password', 'secret_sauce');
+  await page.click('#login-button');
+})
