@@ -23,7 +23,7 @@ test('saucedemo', async ({ page }) => {
   await page.fill('#user-name', 'standard_user');
   await page.fill('#password', 'secret_sauce');
   await page.click('#login-button');
-})
+});
 
 test('wikipedia1', async ({ page }) => {
   await page.goto('https://de.wikipedia.org/');
@@ -38,4 +38,34 @@ test('wikipedia1', async ({ page }) => {
 
   //screenshot
   await page.screenshot({ path: 'screenshot.png' });
+});
+
+test('wikipedia2', async ({ page }) => {
+  await page.goto('https://de.wikipedia.org/');
+  await page.click('a[lang=en]');
+  await page.fill('input[name="search"]', 'playwright');
+  await page.click('input[type="search"]');
+
+  await page.waitForTimeout(2000);
+
+  //search for "Playwright"
+  const pageContent = await page.content();
+  await expect(pageContent).toContain('Playwright');
+});
+
+test.describe('sauceDemoValidierung', () => {
+  test('leereEingabe', async ({ page }) => {
+    await page.goto('https://saucedemo.com/');
+    await page.click('#login-button');
+    const errorLocator = await page.locator('[data-test="error"]');
+    await expect(errorLocator).toContainText('Username is required');
+    });
+  test('falschesPasswort', async ({ page }) => {
+    await page.goto('https://saucedemo.com/');
+    await page.fill('#user-name', 'standard_user');
+    await page.fill('#password', 'falschesPasswort');
+    await page.click('#login-button');
+    const errorLocator = await page.locator('[data-test="error"]');
+    await expect(errorLocator).toContainText('Username and password do not match any user in this service');
+  });
 });
