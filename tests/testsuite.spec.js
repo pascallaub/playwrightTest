@@ -168,4 +168,12 @@ test.describe('Mobile Tests', () => {
     const title = await page.title();
     expect(title).toContain('Wikipedia');
   });
+
+  test('Mobile View Navbar', async ({ page }) => {
+    await page.goto('https://wikipedia.org/');
+    await page.setViewportSize({ width: 375, height: 812 });
+    const navigationElements = await page.locator('nav').locator('a');
+    const navigationCount = await navigationElements.count();
+    expect(navigationCount).toBeGreaterThan(0);
+  });
 });
