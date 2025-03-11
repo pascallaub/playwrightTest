@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Wikipedia Tests', () => {
-  test('wikipedia', async ({ page }) => {
+  test('Navbar Test', async ({ page }) => {
     await page.goto('https://wikipedia.org/');
 
     // Expect a title "to contain" a substring.
@@ -15,7 +15,7 @@ test.describe('Wikipedia Tests', () => {
   });
 
   
-  test('wikipedia1', async ({ page }) => {
+  test('Search Test', async ({ page }) => {
     await page.goto('https://de.wikipedia.org/');
     await page.fill('input[name="search"]', 'playwright');
     await page.click('input[type="submit"]');
@@ -30,7 +30,7 @@ test.describe('Wikipedia Tests', () => {
     await page.screenshot({ path: 'screenshot.png' });
   });
   
-  test('wikipedia2', async ({ page }) => {
+  test('Language Test', async ({ page }) => {
     await page.goto('https://de.wikipedia.org/');
     await page.click('a[lang=en]');
     await page.fill('input[name="search"]', 'playwright');
